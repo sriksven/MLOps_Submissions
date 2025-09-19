@@ -62,7 +62,7 @@ Response:
 Retrain
 POST /retrain → retrains the model and updates iris_model.pkl
 
-Project Structre:
+Project Structure:
 
 ```
 FastAPI_Labs/
