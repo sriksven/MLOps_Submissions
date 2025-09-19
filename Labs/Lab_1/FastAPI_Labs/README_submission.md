@@ -63,6 +63,8 @@ Retrain
 POST /retrain → retrains the model and updates iris_model.pkl
 
 Project Structre:
+
+```
 FastAPI_Labs/
 │── assets/
 │── model/
@@ -77,6 +79,8 @@ FastAPI_Labs/
 │── .gitignore
 │── README_submission.md
 └── README.md
+
+```
 
 
 
