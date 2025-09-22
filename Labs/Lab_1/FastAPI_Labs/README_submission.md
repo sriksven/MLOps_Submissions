@@ -1,15 +1,15 @@
-# FastAPI Lab – Iris Classifier API
+# FastAPI Lab - Iris Classifier API
 
 
 ## 🔄 Enhancements Over Original Lab
 
-When I first started with the lab, the FastAPI application was very minimal — it only returned an integer class label inside a basic response model. The /predict endpoint simply gave me something like { "response": 2 }, and there was no way to retrain the model without running train.py manually. Also, predictions weren’t being tracked anywhere, and error handling was limited. It was a good starting point, but I wanted to push it further and make it more realistic.
+When I first started with the lab, the FastAPI application was very minimal; it only returned an integer class label inside a basic response model. The /predict endpoint simply gave me something like { "response": 2 }, and there was no way to retrain the model without running train.py manually. Also, predictions weren’t being tracked anywhere, and error handling was limited. It was a good starting point, but I wanted to push it further and make it more realistic.
 
 So, I made several enhancements to improve both functionality and usability:
 
 I updated the /predict endpoint to return not just the class label but also the probability scores, so I can see how confident the model is for each prediction.
 
-I built a logging system that automatically appends every prediction into prediction_log.csv with timestamp, input features, predicted class, and probabilities — this way, I can audit or review past predictions anytime.
+I built a logging system that automatically appends every prediction into prediction_log.csv with timestamp, input features, predicted class, and probabilities. This way, I can audit or review past predictions anytime.
 
 I added a new /retrain endpoint, which triggers train.py via subprocess, allowing me to retrain the model directly from the API instead of running scripts manually.
 
