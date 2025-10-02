@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.log
+
+# Environments
+*.env
+.venv/
+env/
+venv/
+fastapi_lab1_env/
+mllabs/
+
+# OS
+.DS_Store
+
+
