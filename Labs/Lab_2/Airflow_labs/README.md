@@ -296,6 +296,7 @@ src/reports/20251004T021030Z/
 flowchart TD
     A["DAG 1: Generate Data"] --> B["DAG 2: Train Model"]
     B --> C["DAG 3: Email Report"]
+```
 
 Each DAG triggers the next one automatically using Airflow’s TriggerDagRunOperator.
 
@@ -304,21 +305,21 @@ Results and Outcomes
 
 After the pipeline runs:
 
-A synthetic dataset is generated and stored.
+ - A synthetic dataset is generated and stored.
 
-A Linear Regression model is trained.
+ - A Linear Regression model is trained.
 
-Metrics and visualizations are produced.
+ - Metrics and visualizations are produced.
 
-A report folder is created under src/reports/.
+ - A report folder is created under src/reports/.
 
-An automated email is sent to sriks071@gmail.com containing:
+ - An automated email is sent to sriks071@gmail.com containing:
 
-Model metrics
+   - Model metrics
 
-Inline plots
+   - Inline plots
 
-CSV and JSON attachments
+   - CSV and JSON attachments
 
 The entire workflow requires only one manual trigger (DAG 1). The rest runs automatically.
 
@@ -327,19 +328,19 @@ The entire workflow requires only one manual trigger (DAG 1). The rest runs auto
 
 Key Features
 
-Fully automated machine learning lifecycle from data to email
+- Fully automated machine learning lifecycle from data to email
 
-End-to-end DAG chaining and orchestration using Airflow
+- End-to-end DAG chaining and orchestration using Airflow
 
-Automatic report generation and timestamped versioning
+- Automatic report generation and timestamped versioning
 
-Inline email visualizations and attached results
+- Inline email visualizations and attached results
 
-Gmail SMTP integration
+- Gmail SMTP integration
 
-macOS-compatible plotting using Agg backend
+- macOS-compatible plotting using Agg backend
 
-Cross-DAG communication via Airflow conf and XCom
+- Cross-DAG communication via Airflow conf and XCom
 
 
 
