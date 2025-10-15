@@ -1,0 +1,7 @@
+snorkel
+pandas
+numpy
+scikit-learn
+textblob
+datasets
+matplotlib
