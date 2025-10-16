@@ -1,7 +1,12 @@
-snorkel
-pandas
+os
+random
+re
+nltk
 numpy
-scikit-learn
-textblob
+pandas
+snorkel
 datasets
-matplotlib
+transformers
+tensorflow
+names
+scikit-learn
