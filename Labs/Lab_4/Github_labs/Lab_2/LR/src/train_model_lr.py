@@ -16,35 +16,34 @@ if __name__ == "__main__":
     args = parser.parse_args()
     timestamp = args.timestamp
 
-    print("📥 Loading IMDB dataset...")
-
-    # Force reload to avoid unsupervised cache issue
+    print("📥 Loading IMDB dataset (labeled only)...")
     dataset = load_dataset("imdb", download_mode="force_redownload")
 
-    # Use only labeled data
     train_data = dataset["train"]
     test_data = dataset["test"]
 
-    # Combine a small labeled subset for fast GitHub Actions run
-    X = train_data["text"][:2000] + test_data["text"][:500]
-    y = train_data["label"][:2000] + test_data["label"][:500]
+    # ✅ Manually balance classes (equal positives & negatives)
+    pos_train_idx = [i for i, y in enumerate(train_data["label"]) if y == 1][:1000]
+    neg_train_idx = [i for i, y in enumerate(train_data["label"]) if y == 0][:1000]
+    pos_test_idx = [i for i, y in enumerate(test_data["label"]) if y == 1][:250]
+    neg_test_idx = [i for i, y in enumerate(test_data["label"]) if y == 0][:250]
 
-    # ✅ Ensure both classes exist
-    unique_classes = np.unique(y)
-    if len(unique_classes) < 2:
-        print("⚠️ Only one class detected, expanding sample...")
-        X = train_data["text"][:10000] + test_data["text"][:5000]
-        y = train_data["label"][:10000] + test_data["label"][:5000]
-        unique_classes = np.unique(y)
-        print(f"✅ Classes after expansion: {unique_classes}")
+    X = (
+        [train_data["text"][i] for i in pos_train_idx + neg_train_idx]
+        + [test_data["text"][i] for i in pos_test_idx + neg_test_idx]
+    )
+    y = (
+        [1 for _ in pos_train_idx] + [0 for _ in neg_train_idx]
+        + [1 for _ in pos_test_idx] + [0 for _ in neg_test_idx]
+    )
 
-    print(f"✅ Classes found: {np.unique(y)}")
+    print(f"✅ Class distribution: {np.unique(y, return_counts=True)}")
 
-    print("🔠 Vectorizing text using TF-IDF...")
+    print("🔠 Vectorizing text using TF-IDF (2000 features)...")
     vectorizer = TfidfVectorizer(max_features=2000)
     X_vec = vectorizer.fit_transform(X)
 
-    print("✂️ Splitting data into train and test sets...")
+    print("✂️ Splitting data into train/test sets...")
     X_train, X_test, y_train, y_test = train_test_split(
         X_vec, y, test_size=0.2, random_state=42, stratify=y
     )
@@ -53,7 +52,7 @@ if __name__ == "__main__":
     model = LogisticRegression(max_iter=300)
     model.fit(X_train, y_train)
 
-    print("📈 Evaluating model performance...")
+    print("📈 Evaluating model...")
     y_pred = model.predict(X_test)
     acc = accuracy_score(y_test, y_pred)
     f1 = f1_score(y_test, y_pred)
@@ -61,8 +60,8 @@ if __name__ == "__main__":
 
     # ✅ Log metrics with MLflow
     mlflow.set_tracking_uri("./mlruns")
-    experiment_name = f"IMDB_LogReg_{datetime.datetime.now().strftime('%y%m%d_%H%M%S')}"
-    exp_id = mlflow.create_experiment(experiment_name)
+    exp_name = f"IMDB_LogReg_{datetime.datetime.now().strftime('%y%m%d_%H%M%S')}"
+    exp_id = mlflow.create_experiment(exp_name)
     with mlflow.start_run(experiment_id=exp_id, run_name="IMDB_LogisticRegression"):
         mlflow.log_params({
             "model": "LogisticRegression",
