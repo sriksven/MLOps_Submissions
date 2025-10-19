@@ -7,6 +7,10 @@ on:
   schedule:
     - cron: '0 0 * * *'  # optional: run daily at midnight
 
+# ✅ Give GitHub Actions permission to push files back to the repo
+permissions:
+  contents: write
+
 jobs:
   train:
     runs-on: ubuntu-latest
@@ -23,7 +27,6 @@ jobs:
       - name: Install Dependencies
         run: pip install -r Labs/Lab_4/Github_labs/Lab_2/LR/requirements.txt
 
-
       - name: Generate Timestamp
         id: timestamp
         run: echo "timestamp=$(date '+%Y%m%d%H%M%S')" >> $GITHUB_ENV
@@ -34,13 +37,12 @@ jobs:
       - name: Evaluate Model
         run: python Labs/Lab_4/Github_labs/Lab_2/LR/src/evaluate_model.py --timestamp "${{ env.timestamp }}"
 
-
       - name: Commit and Push Results
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add metrics/*.json models/*.joblib
-          git commit -m "Add model and metrics (${{ env.timestamp }})"
+          git commit -m "Add model and metrics (${{ env.timestamp }})" || echo "No changes to commit"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
