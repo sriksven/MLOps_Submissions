@@ -1,0 +1,44 @@
+name: IMDB Sentiment Model Training
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * *'  # optional: run daily at midnight
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate Timestamp
+        id: timestamp
+        run: echo "timestamp=$(date '+%Y%m%d%H%M%S')" >> $GITHUB_ENV
+
+      - name: Train Model
+        run: python src/train_model_lr.py --timestamp "${{ env.timestamp }}"
+
+      - name: Evaluate Model
+        run: python src/evaluate_model.py --timestamp "${{ env.timestamp }}"
+
+      - name: Commit and Push Results
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add metrics/*.json models/*.joblib
+          git commit -m "Add model and metrics (${{ env.timestamp }})"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
