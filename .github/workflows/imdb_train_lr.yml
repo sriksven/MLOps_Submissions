@@ -21,7 +21,8 @@ jobs:
           python-version: "3.9"
 
       - name: Install Dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r Labs/Lab_4/Github_labs/Lab_2/LR/requirements.txt
+
 
       - name: Generate Timestamp
         id: timestamp
