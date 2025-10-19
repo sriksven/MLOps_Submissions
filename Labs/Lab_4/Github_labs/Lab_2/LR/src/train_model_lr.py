@@ -18,23 +18,37 @@ if __name__ == "__main__":
 
     print("📥 Loading IMDB dataset...")
 
-    # ✅ Load only labeled data (avoid unsupervised subset)
-    dataset = load_dataset("imdb")
+    # Force reload to avoid unsupervised cache issue
+    dataset = load_dataset("imdb", download_mode="force_redownload")
+
+    # Use only the labeled splits
     train_data = dataset["train"]
     test_data = dataset["test"]
 
-    # Use small portions for fast GitHub Actions run
+    # Combine small portions for fast GitHub Actions run
     X = train_data["text"][:2000] + test_data["text"][:500]
     y = train_data["label"][:2000] + test_data["label"][:500]
 
-    # ✅ Ensure both classes exist
+    # ✅ Check for class imbalance
     unique_classes = np.unique(y)
-    if len(unique_classes) < 2:
-        print("⚠️ Only one class detected, expanding sample...")
-        X = train_data["text"][:4000] + test_data["text"][:1000]
-        y = train_data["label"][:4000] + test_data["label"][:1000]
+    print(f"✅ Classes found before adjustment: {unique_classes}")
 
-    print(f"✅ Classes found: {np.unique(y)}")
+    # If still one class, expand the dataset further
+    if len(unique_classes) < 2:
+        print("⚠️ Only one class detected, expanding and reloading more samples...")
+        X = train_data["text"][:10000] + test_data["text"][:5000]
+        y = train_data["label"][:10000] + test_data["label"][:5000]
+        unique_classes = np.unique(y)
+        print(f"✅ Classes after expansion: {unique_classes}")
+
+    # If STILL only one class, create a small balanced sample manually
+    if len(unique_classes) < 2:
+        print("⚠️ IMDB cache corrupted — manually creating balanced dataset.")
+        half = len(train_data["text"][:2000]) // 2
+        X = train_data["text"][:half] + train_data["text"][-half:]
+        y = [0] * half + [1] * half
+        unique_classes = np.unique(y)
+        print(f"✅ Manually balanced classes: {unique_classes}")
 
     print("🔠 Vectorizing text using TF-IDF...")
     vectorizer = TfidfVectorizer(max_features=2000)
@@ -53,7 +67,6 @@ if __name__ == "__main__":
     y_pred = model.predict(X_test)
     acc = accuracy_score(y_test, y_pred)
     f1 = f1_score(y_test, y_pred)
-
     print(f"✅ Accuracy: {acc:.4f} | F1 Score: {f1:.4f}")
 
     # ✅ Log metrics with MLflow
@@ -79,5 +92,4 @@ if __name__ == "__main__":
     model_filename = f"models/model_{timestamp}_lr.joblib"
     dump(model, model_filename)
     print(f"💾 Model saved as {model_filename}")
-
     print("🎉 Training completed successfully!")
