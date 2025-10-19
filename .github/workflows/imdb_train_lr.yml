@@ -29,10 +29,11 @@ jobs:
         run: echo "timestamp=$(date '+%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
       - name: Train Model
-        run: python src/train_model_lr.py --timestamp "${{ env.timestamp }}"
+        run: python Labs/Lab_4/Github_labs/Lab_2/LR/src/train_model_lr.py --timestamp "${{ env.timestamp }}"
 
       - name: Evaluate Model
-        run: python src/evaluate_model.py --timestamp "${{ env.timestamp }}"
+        run: python Labs/Lab_4/Github_labs/Lab_2/LR/src/evaluate_model.py --timestamp "${{ env.timestamp }}"
+
 
       - name: Commit and Push Results
         run: |
