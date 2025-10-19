@@ -154,4 +154,11 @@ Main Sections:
 
 ---
 
+Outputs Generated Each Run
+| Folder     | Description                                   |
+| ---------- | --------------------------------------------- |
+| `models/`  | Trained models and TF-IDF vectorizers         |
+| `metrics/` | Model evaluation results (accuracy, F1 score) |
+| `results/` | Predicted vs. actual labels on test samples   |
+| `mlruns/`  | MLflow logs and experiment tracking data      |
 
