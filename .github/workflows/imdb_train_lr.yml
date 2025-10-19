@@ -37,11 +37,14 @@ jobs:
       - name: Evaluate Model
         run: python Labs/Lab_4/Github_labs/Lab_2/LR/src/evaluate_model.py --timestamp "${{ env.timestamp }}"
 
+      - name: Test Model
+        run: python Labs/Lab_4/Github_labs/Lab_2/LR/src/test_model.py --timestamp "${{ env.timestamp }}"
+
       - name: Commit and Push Results
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add metrics/*.json models/*.joblib
+          git add metrics/*.json models/*.joblib results/*.json
           git commit -m "Add model and metrics (${{ env.timestamp }})" || echo "No changes to commit"
           git push
         env:
