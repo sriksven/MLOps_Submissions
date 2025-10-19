@@ -17,18 +17,22 @@ if __name__ == "__main__":
     timestamp = args.timestamp
 
     print("📥 Loading IMDB dataset...")
-    dataset = load_dataset("imdb", split="train[:2000]")  # small subset for fast GitHub run
 
-    X = dataset["text"]
-    y = dataset["label"]
+    # ✅ Load only labeled data (avoid unsupervised subset)
+    dataset = load_dataset("imdb")
+    train_data = dataset["train"]
+    test_data = dataset["test"]
+
+    # Use small portions for fast GitHub Actions run
+    X = train_data["text"][:2000] + test_data["text"][:500]
+    y = train_data["label"][:2000] + test_data["label"][:500]
 
     # ✅ Ensure both classes exist
     unique_classes = np.unique(y)
     if len(unique_classes) < 2:
-        print("⚠️ Only one class detected, increasing sample size...")
-        dataset = load_dataset("imdb", split="train[:4000]")
-        X = dataset["text"]
-        y = dataset["label"]
+        print("⚠️ Only one class detected, expanding sample...")
+        X = train_data["text"][:4000] + test_data["text"][:1000]
+        y = train_data["label"][:4000] + test_data["label"][:1000]
 
     print(f"✅ Classes found: {np.unique(y)}")
 
@@ -56,7 +60,6 @@ if __name__ == "__main__":
     mlflow.set_tracking_uri("./mlruns")
     experiment_name = f"IMDB_LogReg_{datetime.datetime.now().strftime('%y%m%d_%H%M%S')}"
     exp_id = mlflow.create_experiment(experiment_name)
-
     with mlflow.start_run(experiment_id=exp_id, run_name="IMDB_LogisticRegression"):
         mlflow.log_params({
             "model": "LogisticRegression",
@@ -69,7 +72,7 @@ if __name__ == "__main__":
             "f1_score": f1
         })
 
-    # ✅ Save model to timestamped version
+    # ✅ Save model with timestamp
     if not os.path.exists("models/"):
         os.makedirs("models/")
 
