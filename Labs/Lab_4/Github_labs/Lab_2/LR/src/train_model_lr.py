@@ -21,34 +21,24 @@ if __name__ == "__main__":
     # Force reload to avoid unsupervised cache issue
     dataset = load_dataset("imdb", download_mode="force_redownload")
 
-    # Use only the labeled splits
+    # Use only labeled data
     train_data = dataset["train"]
     test_data = dataset["test"]
 
-    # Combine small portions for fast GitHub Actions run
+    # Combine a small labeled subset for fast GitHub Actions run
     X = train_data["text"][:2000] + test_data["text"][:500]
     y = train_data["label"][:2000] + test_data["label"][:500]
 
-    # ✅ Check for class imbalance
+    # ✅ Ensure both classes exist
     unique_classes = np.unique(y)
-    print(f"✅ Classes found before adjustment: {unique_classes}")
-
-    # If still one class, expand the dataset further
     if len(unique_classes) < 2:
-        print("⚠️ Only one class detected, expanding and reloading more samples...")
+        print("⚠️ Only one class detected, expanding sample...")
         X = train_data["text"][:10000] + test_data["text"][:5000]
         y = train_data["label"][:10000] + test_data["label"][:5000]
         unique_classes = np.unique(y)
         print(f"✅ Classes after expansion: {unique_classes}")
 
-    # If STILL only one class, create a small balanced sample manually
-    if len(unique_classes) < 2:
-        print("⚠️ IMDB cache corrupted — manually creating balanced dataset.")
-        half = len(train_data["text"][:2000]) // 2
-        X = train_data["text"][:half] + train_data["text"][-half:]
-        y = [0] * half + [1] * half
-        unique_classes = np.unique(y)
-        print(f"✅ Manually balanced classes: {unique_classes}")
+    print(f"✅ Classes found: {np.unique(y)}")
 
     print("🔠 Vectorizing text using TF-IDF...")
     vectorizer = TfidfVectorizer(max_features=2000)
@@ -85,11 +75,13 @@ if __name__ == "__main__":
             "f1_score": f1
         })
 
-    # ✅ Save model with timestamp
-    if not os.path.exists("models/"):
-        os.makedirs("models/")
-
+    # ✅ Save model and vectorizer
+    os.makedirs("models", exist_ok=True)
     model_filename = f"models/model_{timestamp}_lr.joblib"
+    vectorizer_filename = f"models/vectorizer_{timestamp}.joblib"
     dump(model, model_filename)
+    dump(vectorizer, vectorizer_filename)
+
     print(f"💾 Model saved as {model_filename}")
+    print(f"💾 Vectorizer saved as {vectorizer_filename}")
     print("🎉 Training completed successfully!")
