@@ -1,5 +1,6 @@
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
+import joblib
 
 def preprocess_data(input_path: str, output_path: str):
     """
@@ -51,7 +52,15 @@ def preprocess_data(input_path: str, output_path: str):
     return df, encoders
 
 
+
+import joblib
+
 if __name__ == "__main__":
     input_path = "data/salaries.csv"
     output_path = "data/cleaned_data.csv"
-    preprocess_data(input_path, output_path)
+    df, encoders = preprocess_data(input_path, output_path)
+
+    # Save encoders for use in the Streamlit app
+    joblib.dump(encoders, "models/label_encoders.pkl")
+    print("💾 Encoders saved to models/label_encoders.pkl")
+

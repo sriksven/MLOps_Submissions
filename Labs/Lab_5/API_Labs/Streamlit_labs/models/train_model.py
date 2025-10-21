@@ -59,5 +59,5 @@ def train_salary_model(data_path: str, model_path: str):
 
 if __name__ == "__main__":
     data_path = "data/cleaned_data.csv"
-    model_path = "model/salary_model.pkl"
+    model_path = "models/salary_model.pkl"
     train_salary_model(data_path, model_path)
