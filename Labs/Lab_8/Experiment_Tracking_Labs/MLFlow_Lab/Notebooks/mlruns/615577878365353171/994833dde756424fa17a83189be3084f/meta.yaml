@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/sriks/Documents/Projects/MLOps_Submissions/Labs/Lab_8/Experiment_Tracking_Labs/MLFlow_Lab/Notebooks/mlruns/615577878365353171/994833dde756424fa17a83189be3084f/artifacts
+end_time: 1761176183885
+entry_point_name: ''
+experiment_id: '615577878365353171'
+lifecycle_stage: active
+run_id: 994833dde756424fa17a83189be3084f
+run_name: rf_baseline_daily_revenue
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761176182062
+status: 3
+tags: []
+user_id: sriks

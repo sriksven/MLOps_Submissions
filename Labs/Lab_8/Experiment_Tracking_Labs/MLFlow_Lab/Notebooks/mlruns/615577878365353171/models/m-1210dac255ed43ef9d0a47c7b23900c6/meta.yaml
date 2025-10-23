@@ -1,0 +1,10 @@
+artifact_location: file:///Users/sriks/Documents/Projects/MLOps_Submissions/Labs/Lab_8/Experiment_Tracking_Labs/MLFlow_Lab/Notebooks/mlruns/615577878365353171/models/m-1210dac255ed43ef9d0a47c7b23900c6/artifacts
+creation_timestamp: 1761176049380
+experiment_id: '615577878365353171'
+last_updated_timestamp: 1761176051192
+model_id: m-1210dac255ed43ef9d0a47c7b23900c6
+model_type: null
+name: model
+source_run_id: 0aa3b838ce85473ca0f64305c7f257ba
+status: 2
+status_message: null

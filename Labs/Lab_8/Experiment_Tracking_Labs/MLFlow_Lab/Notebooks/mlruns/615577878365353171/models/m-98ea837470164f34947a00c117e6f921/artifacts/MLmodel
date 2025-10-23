@@ -1,0 +1,36 @@
+artifact_path: file:///Users/sriks/Documents/Projects/MLOps_Submissions/Labs/Lab_8/Experiment_Tracking_Labs/MLFlow_Lab/Notebooks/mlruns/615577878365353171/models/m-98ea837470164f34947a00c117e6f921/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.9
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.5.2
+is_signature_from_type_hint: false
+mlflow_version: 3.5.0
+model_id: m-98ea837470164f34947a00c117e6f921
+model_size_bytes: 1849609
+model_uuid: m-98ea837470164f34947a00c117e6f921
+prompts: null
+run_id: 994833dde756424fa17a83189be3084f
+signature:
+  inputs: '[{"type": "long", "name": "orders", "required": true}, {"type": "long",
+    "name": "lines", "required": true}, {"type": "integer", "name": "year", "required":
+    true}, {"type": "integer", "name": "month", "required": true}, {"type": "integer",
+    "name": "day", "required": true}, {"type": "long", "name": "is_weekend", "required":
+    true}, {"type": "boolean", "name": "wd_Monday", "required": true}, {"type": "boolean",
+    "name": "wd_Saturday", "required": true}, {"type": "boolean", "name": "wd_Sunday",
+    "required": true}, {"type": "boolean", "name": "wd_Thursday", "required": true},
+    {"type": "boolean", "name": "wd_Tuesday", "required": true}, {"type": "boolean",
+    "name": "wd_Wednesday", "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-10-22 23:36:22.168305'

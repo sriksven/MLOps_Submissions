@@ -1,7 +1,7 @@
 aliases: {}
-creation_timestamp: 1761166478574
+creation_timestamp: 1761176506783
 deployment_job_id: null
 deployment_job_state: null
 description: null
-last_updated_timestamp: 1761169905618
+last_updated_timestamp: 1761176518930
 name: pizza_sales_regressor
