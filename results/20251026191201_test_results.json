@@ -1,0 +1,32 @@
+[
+    {
+        "sample_id": 0,
+        "review_excerpt": "I love sci-fi and am willing to put up with a lot. Sci-fi movies/TV are usually underfunded, under-a...",
+        "predicted_label": 0,
+        "actual_label": 0
+    },
+    {
+        "sample_id": 1,
+        "review_excerpt": "Worth the entertainment value of a rental, especially if you like action movies. This one features t...",
+        "predicted_label": 0,
+        "actual_label": 0
+    },
+    {
+        "sample_id": 2,
+        "review_excerpt": "its a totally average film with a few semi-alright action sequences that make the plot seem a little...",
+        "predicted_label": 0,
+        "actual_label": 0
+    },
+    {
+        "sample_id": 3,
+        "review_excerpt": "STAR RATING: ***** Saturday Night **** Friday Night *** Friday Morning ** Sunday Night * Monday Morn...",
+        "predicted_label": 0,
+        "actual_label": 0
+    },
+    {
+        "sample_id": 4,
+        "review_excerpt": "First off let me say, If you haven't enjoyed a Van Damme movie since bloodsport, you probably will n...",
+        "predicted_label": 1,
+        "actual_label": 0
+    }
+]
