@@ -1,0 +1,17 @@
+# Core ML Metadata and TensorFlow
+ml-metadata
+tensorflow
+# tensorflow-data-validation  # Not available for ARM64 Mac
+
+# Data Handling and Analysis
+pandas
+numpy
+scikit-learn
+
+# Visualization and Utilities
+matplotlib
+seaborn
+
+# Optional (but useful for notebooks)
+jupyterlab
+ipykernel
