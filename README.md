@@ -26,12 +26,12 @@ This repo contains all the MLOps labs' submissions:
 | 4 | Docker | ✅ |
 | 5 | ELK | ✅ |
 | 6 | Experiment Tracking – MLflow | ✅ |
-| 7 | GCP | ✅ |
+| 7 | GCP |  |
 | 8 | GitHub actions | 📤 (Lab 4 submission) |
 | 9 | MLMD | 📤 (Lab 5 submission) |
-| 10 | Model Dev | ✅ |
-| 11 | TensorFlow | ✅ |
-| 12 | Terraform | ✅ |
+| 10 | Model Dev |  |
+| 11 | TensorFlow |  |
+| 12 | Terraform |  |
 
 ---
 
