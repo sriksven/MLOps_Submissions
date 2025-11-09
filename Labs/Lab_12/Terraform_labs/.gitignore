@@ -1,0 +1,12 @@
+# Ignore service account keys
+*.json
+
+# Terraform state and local cache
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.lock.hcl
+
+# OS / editor files
+.DS_Store
+*.log
